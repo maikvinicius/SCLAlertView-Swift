@@ -180,12 +180,12 @@ open class SCLAlertView: UIViewController {
           /// The subView's horizontal margin.
           public var horizontal: CGFloat = 12
         
-          public init(titleTop: CGFloat = 30,
+          public init(titleTop: CGFloat = 0,
                       textViewBottom: CGFloat = 12,
                       buttonSpacing: CGFloat = 10,
                       textFieldSpacing: CGFloat = 15,
                       bottom: CGFloat = 14,
-                      horizontal: CGFloat = 12) {
+                      horizontal: CGFloat = 0) {
             self.titleTop = titleTop
             self.textViewBottom = textViewBottom
             self.buttonSpacing = buttonSpacing
@@ -352,13 +352,13 @@ open class SCLAlertView: UIViewController {
         contentView.addSubview(labelTitle)
         contentView.addSubview(viewText)
         // Circle View
-        circleBG.backgroundColor = appearance.circleBackgroundColor
-        circleBG.layer.cornerRadius = circleBG.frame.size.height / 2
-        baseView.addSubview(circleBG)
-        circleBG.addSubview(circleView)
-        let x = (kCircleHeightBackground - appearance.kCircleHeight) / 2
-        circleView.frame = CGRect(x:x, y:x+appearance.kCircleTopPosition, width:appearance.kCircleHeight, height:appearance.kCircleHeight)
-        circleView.layer.cornerRadius = circleView.frame.size.height / 2
+//        circleBG.backgroundColor = appearance.circleBackgroundColor
+//        circleBG.layer.cornerRadius = circleBG.frame.size.height / 2
+//        baseView.addSubview(circleBG)
+//        circleBG.addSubview(circleView)
+//        let x = (kCircleHeightBackground - appearance.kCircleHeight) / 2
+//        circleView.frame = CGRect(x:x, y:x+appearance.kCircleTopPosition, width:appearance.kCircleHeight, height:appearance.kCircleHeight)
+//        circleView.layer.cornerRadius = circleView.frame.size.height / 2
         // Title
         labelTitle.numberOfLines = 0
         labelTitle.textAlignment = .center
@@ -367,6 +367,11 @@ open class SCLAlertView: UIViewController {
             labelTitle.minimumScaleFactor = appearance.kTitleMinimumScaleFactor
             labelTitle.adjustsFontSizeToFitWidth = true
         }
+        
+        labelTitle.backgroundColor = UIColor(red:0.77, green:0.10, blue:0.10, alpha:1.0)
+        circleView.isHidden = true
+        circleBG.isHidden = true
+        
         labelTitle.frame = CGRect(x:appearance.margin.horizontal, y:appearance.margin.titleTop, width: subViewsWidth, height:appearance.kTitleHeight)
         // View text
         viewText.isEditable = false
@@ -378,7 +383,7 @@ open class SCLAlertView: UIViewController {
         // Colours
         contentView.backgroundColor = appearance.contentViewColor
         viewText.backgroundColor = appearance.contentViewColor
-        labelTitle.textColor = appearance.titleColor
+        labelTitle.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.0)//appearance.titleColor
         viewText.textColor = appearance.subTitleColor
         contentView.layer.borderColor = appearance.contentViewBorderColor.cgColor
         //Gesture Recognizer for tapping outside the textinput
@@ -801,8 +806,8 @@ open class SCLAlertView: UIViewController {
         // Title
         if !title.isEmpty {
             self.labelTitle.text = title
-            let actualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: self.labelTitle.font)
-            self.labelTitle.frame = CGRect(x:appearance.margin.horizontal, y:appearance.margin.titleTop, width: subViewsWidth, height:actualHeight)
+//            let actualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: self.labelTitle.font)
+            self.labelTitle.frame = CGRect(x:appearance.margin.horizontal, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
         }
         
         // Subtitle
@@ -986,7 +991,7 @@ open class SCLAlertView: UIViewController {
     // Close SCLAlertView
     @objc open func hideView() {
         UIView.animate(withDuration: 0.2, animations: {
-            self.view.alpha = 0
+            self.view.alpha =   0
             }, completion: { finished in
                 
                 // Stop timeoutTimer so alertView does not attempt to hide itself and fire it's dimiss block a second time when close button is tapped
