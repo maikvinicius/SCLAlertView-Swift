@@ -372,7 +372,9 @@ open class SCLAlertView: UIViewController {
         circleView.isHidden = true
         circleBG.isHidden = true
         
-        labelTitle.frame = CGRect(x:appearance.margin.horizontal, y:appearance.margin.titleTop, width: subViewsWidth, height:appearance.kTitleHeight)
+        let labelWidth = appearance.kWindowWidth - 2 * 0
+        
+        labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: labelWidth, height:appearance.kTitleHeight)
         // View text
         viewText.isEditable = false
         viewText.isSelectable = false
@@ -429,7 +431,7 @@ open class SCLAlertView: UIViewController {
         consumedHeight += (appearance.kTextFieldHeight + textFieldMargin) * CGFloat(inputs.count)
         consumedHeight += appearance.kTextViewdHeight * CGFloat(input.count)
         let maxViewTextHeight = maxHeight - consumedHeight
-        let viewTextWidth = subViewsWidth
+        let viewTextWidth = appearance.kWindowWidth - 2 * 12 //subViewsWidth
         var viewTextHeight = appearance.kTextHeight
         
         // Check if there is a custom subview and add it over the textview
@@ -471,34 +473,34 @@ open class SCLAlertView: UIViewController {
         
         // Subtitle
         y = titleActualHeight > 0 ? appearance.margin.titleTop + titleActualHeight + titleOffset : defaultTopOffset
-        viewText.frame = CGRect(x:appearance.margin.horizontal, y:y, width: viewTextWidth, height:viewTextHeight)
+        viewText.frame = CGRect(x:0, y:y, width: viewTextWidth, height:viewTextHeight)
         // Text fields
         y += viewTextHeight
         y += viewText.text.isEmpty ? 0 : appearance.margin.textViewBottom // only viewText.text is not empty should have margin.
       
         for txt in inputs {
-            txt.frame = CGRect(x:appearance.margin.horizontal, y:y, width:subViewsWidth, height:appearance.kTextFieldHeight)
+            txt.frame = CGRect(x:12, y:y, width:subViewsWidth, height:appearance.kTextFieldHeight)
             txt.layer.cornerRadius = appearance.fieldCornerRadius
             y += appearance.kTextFieldHeight + textFieldMargin
         }
         for txt in input {
-            txt.frame = CGRect(x:appearance.margin.horizontal, y:y, width:subViewsWidth, height:appearance.kTextViewdHeight - appearance.margin.textViewBottom)
+            txt.frame = CGRect(x:12, y:y, width:subViewsWidth, height:appearance.kTextViewdHeight - appearance.margin.textViewBottom)
             //txt.layer.cornerRadius = fieldCornerRadius
             y += appearance.kTextViewdHeight
         }
         // Buttons
-        var buttonX = appearance.margin.horizontal
+        var buttonX:CGFloat = 12//appearance.margin.horizontal
         switch appearance.buttonsLayout {
         case .vertical:
             for btn in buttons {
-                btn.frame = CGRect(x:buttonX, y:y, width:subViewsWidth, height:appearance.kButtonHeight)
+                btn.frame = CGRect(x:buttonX, y:y, width:(appearance.kWindowWidth - 2 * 12), height:appearance.kButtonHeight)
                 btn.layer.cornerRadius = appearance.buttonCornerRadius
                 y += appearance.kButtonHeight + buttonMargin
             }
         case .horizontal:
           let numberOfButton = CGFloat(buttons.count)
           let buttonsSpace = numberOfButton >= 1 ? CGFloat(10) * (numberOfButton - 1) : 0
-          let widthEachButton = (subViewsWidth - buttonsSpace) / numberOfButton
+          let widthEachButton = ((appearance.kWindowWidth - 2 * 12) - buttonsSpace) / numberOfButton
             for btn in buttons {
                 btn.frame = CGRect(x:buttonX, y:y, width: widthEachButton, height:appearance.kButtonHeight)
                 btn.layer.cornerRadius = appearance.buttonCornerRadius
@@ -807,7 +809,7 @@ open class SCLAlertView: UIViewController {
         if !title.isEmpty {
             self.labelTitle.text = title
 //            let actualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: self.labelTitle.font)
-            self.labelTitle.frame = CGRect(x:appearance.margin.horizontal, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
+            self.labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
         }
         
         // Subtitle
