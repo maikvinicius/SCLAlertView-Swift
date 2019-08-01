@@ -179,7 +179,7 @@ class ViewController: UIViewController {
         let icon = UIImage(named:"custom_icon.png")
         let color = UIColor.orange
         
-        _ = alert.showCustom("Custom Color", subTitle: "Custom color", color: color, circleIconImage: icon!)
+        _ = alert.showCustom("ATENÇÃO", subTitle: "Vídeos do IGTV exigem um título.", color: color, circleIconImage: icon!)
     }
 	
   @IBAction func showEmptySubTitleAlert(_ sender: UIButton) {

@@ -382,6 +382,7 @@ open class SCLAlertView: UIViewController {
         viewText.textContainerInset = UIEdgeInsets.zero
         viewText.textContainer.lineFragmentPadding = 0;
         viewText.font = appearance.kTextFont
+        viewText.contentInset = UIEdgeInsets(top: 25, left: 25, bottom: 25, right: 0)
         // Colours
         contentView.backgroundColor = appearance.contentViewColor
         viewText.backgroundColor = appearance.contentViewColor
@@ -477,6 +478,7 @@ open class SCLAlertView: UIViewController {
         // Text fields
         y += viewTextHeight
         y += viewText.text.isEmpty ? 0 : appearance.margin.textViewBottom // only viewText.text is not empty should have margin.
+        viewText.textAlignment = .center
       
         for txt in inputs {
             txt.frame = CGRect(x:12, y:y, width:subViewsWidth, height:appearance.kTextFieldHeight)
@@ -492,20 +494,28 @@ open class SCLAlertView: UIViewController {
         var buttonX:CGFloat = 12//appearance.margin.horizontal
         switch appearance.buttonsLayout {
         case .vertical:
+            var i=0
             for btn in buttons {
                 btn.frame = CGRect(x:buttonX, y:y, width:(appearance.kWindowWidth - 2 * 12), height:appearance.kButtonHeight)
                 btn.layer.cornerRadius = appearance.buttonCornerRadius
+                btn.backgroundColor = nil
+                btn.setTitleColor((i == 0) ? UIColor(red:0.69, green:0.69, blue:0.69, alpha:1.0) : UIColor(red:0.47, green:0.61, blue:0.74, alpha:1.0), for: .normal)
                 y += appearance.kButtonHeight + buttonMargin
+                i = i + 1
             }
         case .horizontal:
           let numberOfButton = CGFloat(buttons.count)
           let buttonsSpace = numberOfButton >= 1 ? CGFloat(10) * (numberOfButton - 1) : 0
           let widthEachButton = ((appearance.kWindowWidth - 2 * 12) - buttonsSpace) / numberOfButton
+            var i=0
             for btn in buttons {
                 btn.frame = CGRect(x:buttonX, y:y, width: widthEachButton, height:appearance.kButtonHeight)
                 btn.layer.cornerRadius = appearance.buttonCornerRadius
+                btn.backgroundColor = nil
+                btn.setTitleColor((i == 0) ? UIColor(red:0.69, green:0.69, blue:0.69, alpha:1.0) : UIColor(red:0.47, green:0.61, blue:0.74, alpha:1.0), for: .normal)
                 buttonX += widthEachButton
                 buttonX += buttonsSpace
+                i = i + 1
             }
         }
     }
@@ -568,7 +578,7 @@ open class SCLAlertView: UIViewController {
     
     @discardableResult
     open func addButton(_ title:String, backgroundColor:UIColor? = nil, textColor:UIColor? = nil, showTimeout:SCLButton.ShowTimeoutConfiguration? = nil, action:@escaping ()->Void)->SCLButton {
-        let btn = addButton(title, backgroundColor: backgroundColor, textColor: textColor, showTimeout: showTimeout)
+        let btn = addButton(title, backgroundColor: nil, textColor: textColor, showTimeout: showTimeout)
         btn.actionType = SCLActionType.closure
         btn.action = action
         btn.addTarget(self, action:#selector(SCLAlertView.buttonTapped(_:)), for:.touchUpInside)
@@ -579,7 +589,7 @@ open class SCLAlertView: UIViewController {
     
     @discardableResult
     open func addButton(_ title:String, backgroundColor:UIColor? = nil, textColor:UIColor? = nil, showTimeout:SCLButton.ShowTimeoutConfiguration? = nil, target:AnyObject, selector:Selector)->SCLButton {
-        let btn = addButton(title, backgroundColor: backgroundColor, textColor: textColor, showTimeout: showTimeout)
+        let btn = addButton(title, backgroundColor: nil, textColor: textColor, showTimeout: showTimeout)
         btn.actionType = SCLActionType.selector
         btn.target = target
         btn.selector = selector
@@ -597,9 +607,9 @@ open class SCLAlertView: UIViewController {
         // Add button
         let btn = SCLButton()
         btn.layer.masksToBounds = true
-        btn.setTitle(title, for: .normal)
+        btn.setTitle(title.uppercased(), for: .normal)
         btn.titleLabel?.font = appearance.kButtonFont
-        btn.customBackgroundColor = backgroundColor
+        btn.customBackgroundColor = nil
         btn.customTextColor = textColor
         btn.initialTitle = title
         btn.showTimeout = showTimeout
@@ -630,11 +640,11 @@ open class SCLAlertView: UIViewController {
         let pressBrightnessFactor = 0.85
         btn.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
         brightness = brightness * CGFloat(pressBrightnessFactor)
-        btn.backgroundColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
+        btn.backgroundColor = nil//UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
     }
     
     @objc func buttonRelease(_ btn:SCLButton) {
-        btn.backgroundColor = btn.customBackgroundColor ?? viewColor
+        btn.backgroundColor = nil//btn.customBackgroundColor ?? viewColor
     }
     
     var tmpContentViewFrameOrigin: CGPoint?
@@ -807,15 +817,20 @@ open class SCLAlertView: UIViewController {
         
         // Title
         if !title.isEmpty {
-            self.labelTitle.text = title
+            self.labelTitle.text = title.uppercased()
+            self.labelTitle.font = UIFont.boldSystemFont(ofSize: 14.0)
 //            let actualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: self.labelTitle.font)
-            self.labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
+            self.labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:20)
+            self.labelTitle.textAlignment = .center
+//            self.labelTitle = UIEdgeInsets(top: 25, left: 25, bottom: 25, right: 0)
         }
         
         // Subtitle
         if let subTitle = subTitle,
           !subTitle.isEmpty {
+            viewText.textAlignment = .center
             viewText.text = subTitle
+            viewText.font = UIFont.boldSystemFont(ofSize: 14.0)
             // Adjust text view size, if necessary
             let str = subTitle as NSString
             let attr = [NSAttributedString.Key.font:viewText.font ?? UIFont()]
@@ -984,7 +999,7 @@ open class SCLAlertView: UIViewController {
 
             let timeoutStr: String = showTimeout.prefix + String(Int(timeout.value)) + showTimeout.suffix
             let txt = String(btn.initialTitle) + " " + timeoutStr
-            btn.setTitle(txt, for: .normal)
+            btn.setTitle(txt.uppercased(), for: .normal)
             
         }
 
