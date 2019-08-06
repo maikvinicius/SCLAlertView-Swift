@@ -493,6 +493,7 @@ open class SCLAlertView: UIViewController {
             y += appearance.kTextViewdHeight
         }
         // Buttons
+        let customButton = UIFont(name: "Poppins-SemiBold", size: 12)
         var buttonX:CGFloat = 12//appearance.margin.horizontal
         switch appearance.buttonsLayout {
         case .vertical:
@@ -502,6 +503,7 @@ open class SCLAlertView: UIViewController {
                 btn.layer.cornerRadius = appearance.buttonCornerRadius
                 btn.backgroundColor = nil
                 btn.setTitleColor((i == 0) ? UIColor(red:0.66, green:0.66, blue:0.66, alpha:1.0) : UIColor(red:0.47, green:0.61, blue:0.74, alpha:1.0), for: .normal)
+                btn.titleLabel?.font = customButton
                 y += appearance.kButtonHeight + buttonMargin
                 i = i + 1
             }
@@ -515,6 +517,7 @@ open class SCLAlertView: UIViewController {
                 btn.layer.cornerRadius = appearance.buttonCornerRadius
                 btn.backgroundColor = nil
                 btn.setTitleColor((i == 0) ? UIColor(red:0.66, green:0.66, blue:0.66, alpha:1.0) : UIColor(red:0.47, green:0.61, blue:0.74, alpha:1.0), for: .normal)
+                btn.titleLabel?.font = customButton
                 buttonX += widthEachButton
                 buttonX += buttonsSpace
                 i = i + 1
@@ -817,13 +820,16 @@ open class SCLAlertView: UIViewController {
             iconImage = checkCircleIconImage(circleIconImage, defaultImage:SCLAlertViewStyleKit.imageOfQuestion)
         }
         
+        let customTitle = UIFont(name: "Poppins-SemiBold", size: 20) // UIFont(name: "Poppins-SemiBold", size: 12)
+        let customText = UIFont(name: "Poppins-Regular", size: 15)
+        
         // Title
         if !title.isEmpty {
             self.labelTitle.text = title.uppercased()
-            self.labelTitle.font = UIFont.boldSystemFont(ofSize: 14.0)
+            self.labelTitle.font = customTitle//UIFont.boldSystemFont(ofSize: 14.0)
 //            let actualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: self.labelTitle.font)
             self.labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
-            self.labelTitle.padding = UIEdgeInsets(top: 15.0, left: 20.0, bottom: 10.0, right: 0)
+            self.labelTitle.padding = UIEdgeInsets(top: 10, left: 20.0, bottom: 10, right: 0)
             self.labelTitle.textAlignment = .left
         }
         
@@ -832,18 +838,18 @@ open class SCLAlertView: UIViewController {
           !subTitle.isEmpty {
             viewText.textAlignment = .center
             viewText.text = subTitle
-            viewText.font = UIFont.boldSystemFont(ofSize: 14.0)
+            viewText.font = customText//UIFont.boldSystemFont(ofSize: 14.0)
             viewText.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
             // Adjust text view size, if necessary
-            let str = subTitle as NSString
-            let attr = [NSAttributedString.Key.font:viewText.font ?? UIFont()]
-            let sz = CGSize(width: subViewsWidth, height:90)
-            let r = str.boundingRect(with: sz, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes:attr, context:nil)
-            let ht = ceil(r.size.height)
-            if ht < appearance.kTextHeight {
-                appearance.kWindowHeight -= (appearance.kTextHeight - ht)
-                appearance.setkTextHeight(ht)
-            }
+//            let str = subTitle as NSString
+//            let attr = [NSAttributedString.Key.font:viewText.font ?? UIFont()]
+//            let sz = CGSize(width: subViewsWidth, height:90)
+//            let r = str.boundingRect(with: sz, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes:attr, context:nil)
+//            let ht = ceil(r.size.height)
+//            if ht < appearance.kTextHeight {
+//                appearance.kWindowHeight -= (appearance.kTextHeight - ht)
+//                appearance.setkTextHeight(ht)
+//            }
         }
         
         // Done button
