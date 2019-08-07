@@ -41,6 +41,7 @@
 		31C111B322FA0951009097E5 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31C1119022FA0951009097E5 /* Poppins-BoldItalic.ttf */; };
 		31C111B422FA0951009097E5 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31C1119122FA0951009097E5 /* Poppins-MediumItalic.ttf */; };
 		31C111B522FA0951009097E5 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31C1119122FA0951009097E5 /* Poppins-MediumItalic.ttf */; };
+		31FE370922FB4483005E6E21 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE370822FB4482005E6E21 /* PaddingLabel.swift */; };
 		70264F031B0F588800B32B18 /* SCLAlertView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70264EF71B0F588700B32B18 /* SCLAlertView.framework */; };
 		70264F141B0F58B400B32B18 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70264F131B0F58B400B32B18 /* UIKit.framework */; };
 		70264F161B0F58BE00B32B18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70264F151B0F58BE00B32B18 /* Foundation.framework */; };
@@ -83,6 +84,7 @@
 		31C1118F22FA0951009097E5 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
 		31C1119022FA0951009097E5 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
 		31C1119122FA0951009097E5 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
+		31FE370822FB4482005E6E21 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		70264EF71B0F588700B32B18 /* SCLAlertView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCLAlertView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70264EFB1B0F588700B32B18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70264F021B0F588800B32B18 /* SCLAlertViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCLAlertViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +174,7 @@
 				70264F171B0F592500B32B18 /* SCLAlertView.swift */,
 				9EAEFBC41CC2AA6600BA87FB /* SCLExtensions.swift */,
 				70264EFA1B0F588700B32B18 /* Supporting Files */,
+				31FE370822FB4482005E6E21 /* PaddingLabel.swift */,
 			);
 			path = SCLAlertView;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31FE370922FB4483005E6E21 /* PaddingLabel.swift in Sources */,
 				9EAEFBC51CC2AA6600BA87FB /* SCLExtensions.swift in Sources */,
 				70264F181B0F592500B32B18 /* SCLAlertView.swift in Sources */,
 			);

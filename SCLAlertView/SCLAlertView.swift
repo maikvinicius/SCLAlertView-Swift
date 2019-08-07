@@ -297,7 +297,7 @@ open class SCLAlertView: UIViewController {
     
     // Members declaration
     var baseView = UIView()
-    var labelTitle = UILabel()
+    var labelTitle = PaddingLabel()
     var viewText = UITextView()
     var contentView = UIView()
     var circleBG = UIView(frame:CGRect(x:0, y:0, width:kCircleHeightBackground, height:kCircleHeightBackground))
@@ -382,7 +382,7 @@ open class SCLAlertView: UIViewController {
         viewText.textContainerInset = UIEdgeInsets.zero
         viewText.textContainer.lineFragmentPadding = 0;
         viewText.font = appearance.kTextFont
-        viewText.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        viewText.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 //        viewText.setBottomBorder()
         // Colours
         contentView.backgroundColor = UIColor(red:0.98, green:0.98, blue:0.98, alpha:1.0) //appearance.contentViewColor texto cor
@@ -481,6 +481,12 @@ open class SCLAlertView: UIViewController {
         y += viewTextHeight
         y += viewText.text.isEmpty ? 0 : appearance.margin.textViewBottom // only viewText.text is not empty should have margin.
         viewText.textAlignment = .center
+        
+        // adicionar view em cima dos dois botões
+        let viewDemo = UIView()
+        viewDemo.frame = CGRect(x: 0, y: y, width: subViewsWidth, height: 1)
+        viewDemo.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0)
+        contentView.addSubview(viewDemo)
       
         for txt in inputs {
             txt.frame = CGRect(x:12, y:y, width:subViewsWidth, height:appearance.kTextFieldHeight)
@@ -520,6 +526,16 @@ open class SCLAlertView: UIViewController {
                 btn.titleLabel?.font = customButton
                 buttonX += widthEachButton
                 buttonX += buttonsSpace
+                
+                if i == 0 && buttons.count > 1 {
+                    let viewDemo = UIView()
+                    viewDemo.frame = CGRect(x: buttonX, y: y, width: 1, height: 100)
+                    viewDemo.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0)
+                    contentView.addSubview(viewDemo)
+                    buttonX += 10
+                }
+                
+                
                 i = i + 1
             }
         }
@@ -829,7 +845,10 @@ open class SCLAlertView: UIViewController {
             self.labelTitle.font = customTitle//UIFont.boldSystemFont(ofSize: 14.0)
 //            let actualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: self.labelTitle.font)
             self.labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
-//            self.labelTitle.padding = UIEdgeInsets(top: 10, left: 20.0, bottom: 10, right: 0)
+            self.labelTitle.topInset = 10.0 //by default
+            self.labelTitle.bottomInset = 10.0 //by default
+            self.labelTitle.leftInset = 20.0 //by default
+            self.labelTitle.rightInset = 0.0 //by default
             self.labelTitle.textAlignment = .left
         }
         
@@ -1412,87 +1431,13 @@ extension SCLAlertView {
   }
 }
 
-//extension UILabel {
-//    private struct AssociatedKeys {
-//        static var padding = UIEdgeInsets()
-//    }
-//
-//    public var padding: UIEdgeInsets? {
-//        get {
-//            return objc_getAssociatedObject(self, &AssociatedKeys.padding) as? UIEdgeInsets
-//        }
-//        set {
-//            if let newValue = newValue {
-//                objc_setAssociatedObject(self, &AssociatedKeys.padding, newValue as UIEdgeInsets?, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-//            }
-//        }
-//    }
-//
-//    override open func draw(_ rect: CGRect) {
-//        if let insets = padding {
-//            self.drawText(in: rect.inset(by: insets))
-//        } else {
-//            self.drawText(in: rect)
-//        }
-//    }
-//
-//    override open var intrinsicContentSize: CGSize {
-//        guard let text = self.text else { return super.intrinsicContentSize }
-//
-//        var contentSize = super.intrinsicContentSize
-//        var textWidth: CGFloat = frame.size.width
-//        var insetsHeight: CGFloat = 0.0
-//        var insetsWidth: CGFloat = 0.0
-//
-//        if let insets = padding {
-//            insetsWidth += insets.left + insets.right
-//            insetsHeight += insets.top + insets.bottom
-//            textWidth -= insetsWidth
-//        }
-//
-//        let newSize = text.boundingRect(with: CGSize(width: textWidth, height: CGFloat.greatestFiniteMagnitude),
-//                                        options: NSStringDrawingOptions.usesLineFragmentOrigin,
-//                                        attributes: [NSAttributedString.Key.font: self.font], context: nil)
-//
-//        contentSize.height = ceil(newSize.size.height) + insetsHeight
-//        contentSize.width = ceil(newSize.size.width) + insetsWidth
-//
-//        return contentSize
-//    }
-//}
-//
-//enum LINE_POSITION {
-//    case LINE_POSITION_TOP
-//    case LINE_POSITION_BOTTOM
-//}
-//
-//extension UIView {
-//    func addLine(position : LINE_POSITION, color: UIColor, width: Double) {
-//        let lineView = UIView()
-//        lineView.backgroundColor = color
-//        lineView.translatesAutoresizingMaskIntoConstraints = false // This is important!
-//        self.addSubview(lineView)
-//
-//        let metrics = ["width" : NSNumber(value: width)]
-//        let views = ["lineView" : lineView]
-//        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[lineView]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
-//
-//        switch position {
-//        case .LINE_POSITION_TOP:
-//            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[lineView(width)]", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
-//            break
-//        case .LINE_POSITION_BOTTOM:
-//            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
-//            break
-//        }
-//    }
-//    func setBottomBorder() {
-//        self.layer.backgroundColor = UIColor.white.cgColor
-//
-//        self.layer.masksToBounds = false
-//        self.layer.shadowColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0).cgColor
-//        self.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-//        self.layer.shadowOpacity = 1.0
-//        self.layer.shadowRadius = 0.0
-//    }
-//}
+extension UIView {
+    func setBottomBorder() {
+        self.layer.backgroundColor = UIColor.white.cgColor
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0).cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        self.layer.shadowOpacity = 1.0
+        self.layer.shadowRadius = 0.0
+    }
+}
