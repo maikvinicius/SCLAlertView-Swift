@@ -363,10 +363,10 @@ open class SCLAlertView: UIViewController {
         labelTitle.numberOfLines = 0
         labelTitle.textAlignment = .left
         labelTitle.font = appearance.kTitleFont
-        if(appearance.kTitleMinimumScaleFactor < 1){
-            labelTitle.minimumScaleFactor = appearance.kTitleMinimumScaleFactor
-            labelTitle.adjustsFontSizeToFitWidth = true
-        }
+//        if(appearance.kTitleMinimumScaleFactor < 1){
+//            labelTitle.minimumScaleFactor = appearance.kTitleMinimumScaleFactor
+//            labelTitle.adjustsFontSizeToFitWidth = true
+//        }
         
         labelTitle.backgroundColor = UIColor(red:0.71, green:0.18, blue:0.15, alpha:1.0) // UIColor(red:0.77, green:0.10, blue:0.10, alpha:1.0) Título background
         circleView.isHidden = true
@@ -374,15 +374,15 @@ open class SCLAlertView: UIViewController {
         
         let labelWidth = appearance.kWindowWidth - 2 * 0
         
-        labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: labelWidth, height:appearance.kTitleHeight)
+        labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: labelWidth, height:100)//appearance.kTitleHeight)
         // View text
         viewText.isEditable = false
         viewText.isSelectable = false
         viewText.textAlignment = .left
-        viewText.textContainerInset = UIEdgeInsets.zero
+        viewText.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)//UIEdgeInsets.zero
         viewText.textContainer.lineFragmentPadding = 0;
         viewText.font = appearance.kTextFont
-        viewText.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        viewText.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 //        viewText.setBottomBorder()
         // Colours
         contentView.backgroundColor = UIColor(red:0.98, green:0.98, blue:0.98, alpha:1.0) //appearance.contentViewColor texto cor
@@ -409,12 +409,12 @@ open class SCLAlertView: UIViewController {
         let defaultTopOffset: CGFloat = 32
 
         // get actual height of title text
-        var titleActualHeight: CGFloat = 0
-        if let title = labelTitle.text {
-          titleActualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: labelTitle.font) + 10
+        let titleActualHeight: CGFloat = 0
+//        if let title = labelTitle.text {
+//          titleActualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: labelTitle.font)// + 10
           // get the larger height for the title text
-          titleActualHeight = (titleActualHeight > appearance.kTitleHeight ? titleActualHeight : appearance.kTitleHeight)
-        }
+//          titleActualHeight = (titleActualHeight > appearance.kTitleHeight ? titleActualHeight : appearance.kTitleHeight)
+//        }
 
         // computing the right size to use for the textView
         let maxHeight = sz.height - 100 // max overall height
@@ -844,12 +844,15 @@ open class SCLAlertView: UIViewController {
             self.labelTitle.text = title.uppercased()
             self.labelTitle.font = customTitle//UIFont.boldSystemFont(ofSize: 14.0)
 //            let actualHeight = title.heightWithConstrainedWidth(width: subViewsWidth, font: self.labelTitle.font)
-            self.labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
-            self.labelTitle.topInset = 10.0 //by default
-            self.labelTitle.bottomInset = 10.0 //by default
-            self.labelTitle.leftInset = 20.0 //by default
+            self.labelTitle.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:50)
+            self.labelTitle.topInset = 20.0 //by default
+            self.labelTitle.bottomInset = 20.0 //by default
+            self.labelTitle.leftInset = 10.0 //by default
             self.labelTitle.rightInset = 0.0 //by default
             self.labelTitle.textAlignment = .left
+            self.labelTitle.numberOfLines = 0
+//            self.labelTitle.adjustsFontSizeToFitWidth = true
+//            self.labelTitle.minimumScaleFactor=0.5
         }
         
         // Subtitle
@@ -858,10 +861,10 @@ open class SCLAlertView: UIViewController {
             viewText.textAlignment = .center
             viewText.text = subTitle
             viewText.font = customText//UIFont.boldSystemFont(ofSize: 14.0)
-            viewText.frame = CGRect(x:0, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
+            viewText.frame = CGRect(x:100, y:appearance.margin.titleTop, width: subViewsWidth, height:30)
             // Adjust text view size, if necessary
 //            let str = subTitle as NSString
-//            let attr = [NSAttributedString.Key.font:viewText.font ?? UIFont()]
+//            let attr = [NSAttributedString.Key.font:customText ?? UIFont()]
 //            let sz = CGSize(width: subViewsWidth, height:90)
 //            let r = str.boundingRect(with: sz, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes:attr, context:nil)
 //            let ht = ceil(r.size.height)

@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showError(_ sender: AnyObject) {
-		_ = SCLAlertView().showError("Hold On...", subTitle:"You have not saved your Submission yet. Please save the Submission before accessing the Responses list. Blah de blah de blah, blah. Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.", closeButtonTitle:"OK")
+		_ = SCLAlertView().showError("You have not saved your Submission yet. Please save the Submission before accessing the Responses list.", subTitle:"You have not saved your Submission yet. Please save the Submission before accessing the Responses list. Blah de blah de blah, blah. Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.", closeButtonTitle:"OK")
 //        SCLAlertView().showError(self, title: kErrorTitle, subTitle: kSubtitle)
     }
     
